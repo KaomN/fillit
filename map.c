@@ -6,7 +6,7 @@
 /*   By: conguyen <conguyen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/11 08:48:21 by conguyen          #+#    #+#             */
-/*   Updated: 2022/01/11 09:06:42 by conguyen         ###   ########.fr       */
+/*   Updated: 2022/01/11 09:55:56 by conguyen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ unsigned int	get_min_map_size(unsigned int num_tets)
 	unsigned int	squares_required;
 
 	squares_required = num_tets * 4;
-	size = 4;
+	size = 2;
 	while (size * size < squares_required)
 		size++;
 	return (size);

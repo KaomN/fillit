@@ -6,9 +6,11 @@
 /*   By: conguyen <conguyen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/09 14:11:26 by conguyen          #+#    #+#             */
-/*   Updated: 2022/01/10 09:11:23 by conguyen         ###   ########.fr       */
+/*   Updated: 2022/01/11 20:44:40 by conguyen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#include "fillit.h"
 
 int	validate_tet(char **tets, int pos[4][2])
 {
@@ -70,28 +72,56 @@ int	check_tet(char **tets, int lines, unsigned int ch)
 int	check_input(char **tets, int lines)
 {
 	int				x;
-	int				check;
 	unsigned int	ch;
 	int				num_tets;
+	int				y;
 
 	x = -1;
-	check = 1;
 	ch = 65;
 	num_tets = 0;
 	while (++x <= lines)
 	{
-		if (check == 5)
-		{
+		y = 0;
+		while (x != lines && tets[x][y] != '\0')
+			y++;
+		if (y != 4 && (x + 1) % 5 != 0)
+			return (-1);
+		if ((x + 1) % 5 == 0 && !check_tet(&tets[x - 4], 4, ch++))
+				return (-1);
+		if ((x + 1) % 5 == 0)
 			num_tets++;
-			check = 0;
-		}
-		if (check == 0 && x != lines && tets[x][0] != '\0')
-			return (-1);
-		if (check == 0 && check_tet(&tets[x - 4], 4, ch++) == -1)
-			return (-1);
-		check++;
 	}
 	if (num_tets * 5 - 1 != lines)
 		return (-1);
+	printf("num tets = %d\n", num_tets);
 	return (1);
 }
+
+// int	check_input(char **tets, int lines)
+// {
+// 	int				x;
+// 	int				check;
+// 	unsigned int	ch;
+// 	int				num_tets;
+
+// 	x = -1;
+// 	check = 1;
+// 	ch = 65;
+// 	num_tets = 0;
+// 	while (++x <= lines)
+// 	{
+// 		if (check == 5)
+// 		{
+// 			num_tets++;
+// 			check = 0;
+// 		}
+// 		if (check == 0 && x != lines && tets[x][0] != '\0')
+// 			return (-1);
+// 		if (check == 0 && check_tet(&tets[x - 4], 4, ch++) == -1)
+// 			return (-1);
+// 		check++;
+// 	}
+// 	if (num_tets * 5 - 1 != lines)
+// 		return (-1);
+// 	return (1);
+// }
