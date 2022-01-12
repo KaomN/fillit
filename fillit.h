@@ -6,7 +6,7 @@
 /*   By: conguyen <conguyen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/03 13:35:57 by conguyen          #+#    #+#             */
-/*   Updated: 2022/01/11 12:54:04 by conguyen         ###   ########.fr       */
+/*   Updated: 2022/01/12 12:48:16 by conguyen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,20 +21,18 @@
 //delete!
 # include <stdio.h>
 
-// typedef struct s_tetrimino
-// {
-// 	int				pos[4][2];
-// 	struct s_tet	*next;
-// }	t_tetrimino;
+typedef struct s_tet
+{
+	int				pos[4][2];
+	int				ch;
+	struct s_tet	*next;
+}	t_tet;
 
 /*
-** tetrimino.c
+** validator.c
 */
 
-int				validate_tet(char **tets, int pos[4][2]);
-void			transform_tet(char **tets, unsigned int ch, int x, int y);
-int				check_tet(char **tets, int lines, unsigned int ch);
-int				check_input(char **tets, int lines);
+int				check_input(char **tets, int lines, t_tet **list);
 
 /*
 ** map.c
@@ -43,5 +41,12 @@ int				check_input(char **tets, int lines);
 unsigned int	get_min_map_size(unsigned int num_tets);
 char			**create_map(unsigned int size);
 char			**increment_map(char **map, unsigned int size);
+
+/*
+** tetrimino.c
+*/
+
+void			append_to_list(t_tet **list, int pos[4][2], int ch);
+void			free_list(t_tet *list);
 
 #endif
