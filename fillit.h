@@ -6,7 +6,7 @@
 /*   By: conguyen <conguyen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/03 13:35:57 by conguyen          #+#    #+#             */
-/*   Updated: 2022/01/12 12:48:16 by conguyen         ###   ########.fr       */
+/*   Updated: 2022/01/18 15:38:07 by conguyen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,13 +18,12 @@
 # include "libft.h"
 # include <unistd.h>
 
-//delete!
-# include <stdio.h>
-
 typedef struct s_tet
 {
-	int				pos[4][2];
+	int				coords[4][2];
 	int				ch;
+	int				x;
+	int				y;
 	struct s_tet	*next;
 }	t_tet;
 
@@ -32,13 +31,13 @@ typedef struct s_tet
 ** validator.c
 */
 
-int				check_input(char **tets, int lines, t_tet **list);
+int				read_input(const int fd, t_tet **tetrimino);
 
 /*
 ** map.c
 */
 
-unsigned int	get_min_map_size(unsigned int num_tets);
+unsigned int	get_min_map_size(t_tet *tetrimino);
 char			**create_map(unsigned int size);
 char			**increment_map(char **map, unsigned int size);
 
@@ -46,7 +45,21 @@ char			**increment_map(char **map, unsigned int size);
 ** tetrimino.c
 */
 
-void			append_to_list(t_tet **list, int pos[4][2], int ch);
+t_tet			*create_list(char **tetarray, int lines, int ch);
+
+/*
+** free.c
+*/
+
 void			free_list(t_tet *list);
+void			free_array(char** tetsarray, int lines);
+void			free_map(char **map, int map_size);
+void			free_coords(int	**coords);
+
+/*
+** solve.c
+*/
+
+int				solver(t_tet *tetrimino, char **map, int map_size);
 
 #endif

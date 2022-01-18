@@ -5,55 +5,110 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: conguyen <conguyen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/01/12 10:10:43 by conguyen          #+#    #+#             */
-/*   Updated: 2022/01/12 12:56:08 by conguyen         ###   ########.fr       */
+/*   Created: 2022/01/18 10:10:43 by conguyen          #+#    #+#             */
+/*   Updated: 2022/01/18 15:18:31 by conguyen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fillit.h"
 
-void	free_list(t_tet *list)
+static int	**move_coords(int **coords)
 {
-	t_tet	*tmp;
+	int	s_y;
+	int	s_x;
+	int	x;
 
-	while (list)
+	s_y = coords[0][0];
+	s_x = coords[0][1];
+	x = 0;
+	while (++x < 4)
 	{
-		tmp = list;
-		list = list->next;
-		free(tmp);
+		if (s_y > coords[x][0])
+			s_y = coords[x][0];
+		if (s_x > coords[x][1])
+			s_x = coords[x][1];
 	}
+	x = -1;
+	while (++x < 4)
+	{
+		coords[x][0] = coords[x][0] - s_y;
+		coords[x][1] = coords[x][1] - s_x;
+	}
+	return (coords);
 }
 
-static void	add_end(t_tet **alst, t_tet *new)
+static int	**get_coords(char **tetarray, int lines)
 {
-	t_tet	*temp;
+	int	x;
+	int	y;
+	int	**coords;
+	int	c;
 
-	if (!(*alst))
-		*alst = new;
-	else
+	x = -1;
+	coords = (int **)malloc(sizeof(int *) * 4);
+	c = 0;
+	while (++x < lines)
 	{
-		temp = *alst;
-		while (temp->next)
-			temp = temp->next;
-		temp->next = new;
+		y = -1;
+		while (tetarray[x][++y] != '\0')
+		{
+			if (tetarray[x][y] == 'A')
+			{
+				coords[c] = (int *)malloc(sizeof(int) * 2);
+				coords[c][0] = y;
+				coords[c][1] = x;
+				c++;
+			}
+		}
 	}
+	return (move_coords(coords));
 }
 
-void	append_to_list(t_tet **list, int pos[4][2], int ch)
+t_tet	*add_tetrimino(int **coords, int ch)
 {
 	t_tet	*newpiece;
 	int		x;
 
-	x = -1;
 	newpiece = (t_tet *)malloc(sizeof(t_tet));
 	if (newpiece == NULL)
-		return ;
+		return (NULL);
+	x = -1;
 	newpiece->ch = ch;
 	newpiece->next = NULL;
 	while (++x < 4)
 	{
-		newpiece->pos[x][0] = pos[x][0];
-		newpiece->pos[x][1] = pos[x][1];
+		newpiece->coords[x][0] = coords[x][0];
+		newpiece->coords[x][1] = coords[x][1];
 	}
-	add_end(list, newpiece);
+	newpiece->x = 0;
+	newpiece->y = 0;
+	return (newpiece);
+}
+
+t_tet	*create_list(char **tetarray, int lines, int ch)
+{
+	t_tet	*tetrimino;
+	t_tet	*head;
+	int		x;
+	int		**coords;
+
+	x = -1;
+	while (++x < lines)
+	{
+		if ((x + 1) % 5 == 0 && x < 5)
+		{
+			coords = get_coords(&tetarray[x - 4], 4);
+			head = add_tetrimino(coords, ch++);
+			tetrimino = head;
+			free_coords(coords);
+		}
+		else if ((x + 1) % 5 == 0 && x > 5)
+		{
+			coords = get_coords(&tetarray[x - 4], 4);
+			tetrimino->next = add_tetrimino(coords, ch++);
+			tetrimino = tetrimino->next;
+			free_coords(coords);
+		}
+	}
+	return (head);
 }

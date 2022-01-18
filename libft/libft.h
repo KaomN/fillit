@@ -6,7 +6,7 @@
 /*   By: conguyen <conguyen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/29 13:48:13 by conguyen          #+#    #+#             */
-/*   Updated: 2022/01/03 13:50:59 by conguyen         ###   ########.fr       */
+/*   Updated: 2022/01/18 15:33:50 by conguyen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 # include <sys/stat.h>
 # include <fcntl.h>
 
-# define BUFF_SIZE 200
+# define BUFF_SIZE 1000
 # define MAX_FD 4096
 
 typedef struct s_list

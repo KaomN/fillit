@@ -6,7 +6,7 @@
 /*   By: conguyen <conguyen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/27 17:05:21 by conguyen          #+#    #+#             */
-/*   Updated: 2022/01/03 14:00:52 by conguyen         ###   ########.fr       */
+/*   Updated: 2022/01/18 10:30:55 by conguyen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,6 @@ static int	ft_get_line(char **saved, char **line, int c)
 		if (temp == NULL)
 			return (-1);
 		*saved = temp;
-		if ((**saved) == '\0')
-			ft_strdel(saved);
 		return (1);
 	}
 	*line = ft_strdup(*saved);

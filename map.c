@@ -6,17 +6,26 @@
 /*   By: conguyen <conguyen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/11 08:48:21 by conguyen          #+#    #+#             */
-/*   Updated: 2022/01/11 09:55:56 by conguyen         ###   ########.fr       */
+/*   Updated: 2022/01/18 15:39:11 by conguyen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fillit.h"
 
-unsigned int	get_min_map_size(unsigned int num_tets)
+unsigned int	get_min_map_size(t_tet *tetrimino)
 {
 	unsigned int	size;
 	unsigned int	squares_required;
+	unsigned int	num_tets;
+	t_tet			*tmp;
 
+	tmp = tetrimino;
+	num_tets = 0;
+	while (tmp->next)
+	{
+		num_tets++;
+		tmp = tmp->next;
+	}
 	squares_required = num_tets * 4;
 	size = 2;
 	while (size * size < squares_required)

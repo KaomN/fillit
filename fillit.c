@@ -6,53 +6,62 @@
 /*   By: conguyen <conguyen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/03 13:34:32 by conguyen          #+#    #+#             */
-/*   Updated: 2022/01/12 12:51:20 by conguyen         ###   ########.fr       */
+/*   Updated: 2022/01/18 15:40:37 by conguyen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fillit.h"
 
-
-
-int	main(void)
+static void	print_solution(char **map, int map_size)
 {
-	char			**tets;
-	int				fd;
-	int				x;
-	t_tet			*list;
-	t_tet			*listhead;
-	// unsigned int	size;
-	// char			**map;
+	int	x;
 
 	x = 0;
-	fd = open("test", O_RDONLY);
-	tets = (char **)malloc(sizeof(*tets) * 105);
-	list = NULL;
-	if (!tets)
-		return (-1);
-	while (get_next_line(fd, &tets[x]))
-		x++;
-	close(fd);
-	printf("Validate returned: [%d]\n", check_input(tets, x, &list));
-	// size = get_min_map_size(5);
-	// printf("%u", size);
-	// map = create_map(size);
-	// for (int z = 0; z <= x; z++)
-	// 	printf("[%s]\n", tets[z]);
-	while (x >= 0)
-		free(tets[x--]);
-	free(tets);
-	listhead = list;
-	while(list)
+	while (x < map_size)
 	{
-		printf("listch: %d\n", list->ch);
-		list = list->next;
+		ft_putstr(map[x]);
+		ft_putchar('\n');
+		x++;
 	}
-	free_list(listhead);
-	// for (unsigned int x = 0; x < size; x++)
-	// 	printf("[%s]\n", map[x]);
-	// for (unsigned int x = 0; x < size; x++)
-	// 	free(map[x]);
-	// free(map);
+}
+
+static void	start_solver(t_tet *tetrimino)
+{
+	int		map_size;
+	char	**map;
+
+	map_size = get_min_map_size(tetrimino);
+	map = create_map(map_size);
+	while (!solver(tetrimino, map, map_size))
+	{
+		map_size++;
+		map = increment_map(map, map_size);
+	}
+	print_solution(map, map_size);
+	free_map(map, map_size);
+}
+
+int	main(int argc, char **argv)
+{
+	int		fd;
+	t_tet	*tetrimino;
+
+	if (argc != 2)
+		ft_putstr("Usage: ./fillit 'filename'\n");
+	if (argc != 2)
+		return (1);
+	fd = open(argv[1], O_RDONLY);
+	if (fd < 0)
+	{
+		ft_putstr("error\n");
+		return (1);
+	}
+	if (read_input(fd, &tetrimino) == 1)
+	{
+		start_solver(tetrimino);
+		free_list(tetrimino);
+	}
+	else
+		ft_putstr("error\n");
 	return (0);
 }
