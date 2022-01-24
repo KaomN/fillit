@@ -6,7 +6,7 @@
 /*   By: conguyen <conguyen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/11 08:48:21 by conguyen          #+#    #+#             */
-/*   Updated: 2022/01/18 15:39:11 by conguyen         ###   ########.fr       */
+/*   Updated: 2022/01/18 17:23:00 by conguyen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ unsigned int	get_min_map_size(t_tet *tetrimino)
 
 	tmp = tetrimino;
 	num_tets = 0;
-	while (tmp->next)
+	while (tmp)
 	{
 		num_tets++;
 		tmp = tmp->next;

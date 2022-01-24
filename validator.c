@@ -6,7 +6,7 @@
 /*   By: conguyen <conguyen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/09 14:11:26 by conguyen          #+#    #+#             */
-/*   Updated: 2022/01/18 15:34:54 by conguyen         ###   ########.fr       */
+/*   Updated: 2022/01/18 17:22:46 by conguyen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,17 +103,17 @@ int	read_input(const int fd, t_tet **tetrimino)
 	int		x;
 
 	x = 0;
-	tetsarray = (char **)malloc(sizeof(*tetsarray) * 122);
+	tetsarray = (char **)malloc(sizeof(*tetsarray) * 131);
 	if (!tetsarray)
 		return (0);
 	while (get_next_line(fd, &tetsarray[x]))
 	{
 		x++;
-		if (x > 120)
+		if (x > 130)
 			break ;
 	}
 	close(fd);
-	if (x > 120)
+	if (x > 130)
 	{
 		free_array(tetsarray, x - 1);
 		return (0);
