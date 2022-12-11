@@ -7,4 +7,7 @@ A tetriminos is a shape made of 4 squares, often found in the game Tetris. Examp
   
 The program must display the smallest possible square on the standard output.  
 Each Tetrimino in the square solution will have a capital letter assigned to them
-starting with 'A' and increasing for each new Tetrimino.
+starting with 'A' and increasing for each new Tetrimino.  
+
+Example output:
+![Screenshot](images/fillit_output.png)
