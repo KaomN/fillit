@@ -9,5 +9,5 @@ The program must display the smallest possible square on the standard output.
 Each Tetrimino in the square solution will have a capital letter assigned to them
 starting with 'A' and increasing for each new Tetrimino.  
 
-Example output:
+Example output:  
 ![Screenshot](images/fillit_output.png)
